@@ -1,37 +1,37 @@
+import asyncio
 import logging
 import config
 import discord
 from discord.ext import commands
-from searcher import Searcher
+
+from discord.commands import slash_command
+from discord.ext.pages import Paginator, Page
+from tr34_sdk import TR34Api
+import discord
+import logging
+import datetime
+from discord.ui import Button
+api = TR34Api()
 bot = discord.Bot()
-logger = logging.getLogger("bot")
+
 @bot.event
 async def on_ready():
     print(f"We have logged in as {bot.user}")
-##TODO Сделать навигацию и эмбеды
-
 
 @bot.slash_command()
-async def findpost(ctx, post_id:int):
+async def findpost(ctx, arg):
+    post = await api.get_post(arg)
+    embed = discord.Embed(title=f"Post {arg}")
+    pages = [
 
-    try:
-        searcher = Searcher({"post_id": post_id})
-        data, main_file_url, tags = searcher.getPost()
-        embed = discord.Embed(title="yay", color=discord.Color.random())
-        tagstupled = " ".join(tags)
-        embed.add_field(name="Tags: ", value=f"```{tagstupled}```", inline=True)
-        embed.set_image(url=f"{main_file_url}")
-        await ctx.respond(embed=embed)
-        logging.info(f"{ctx.author} searched post {post_id}")
-        #await ctx.send("xx", view=MyView())
-    except Exception as e:
-        await ctx.send("Error happened")
-        logging.info(e)
+        Page(embeds=[embed.set_image(url=f"{post.main.file}"),
+                     embed.add_field(name="tags: ", value=f"```{' '.join(tuple(post.tags))}```")])
+
+    ]
+    pagginator = Paginator(pages=pages)
+    await pagginator.respond(ctx.interaction)
 
 
 
-
-
-
-##TODO Перепривязать SDK
 bot.run(config.TOKEN)
+
