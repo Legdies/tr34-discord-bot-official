@@ -20,7 +20,7 @@ bot = discord.Bot()
 async def on_ready():
     print(f"We have logged in as {bot.user}")
 
-from discord.ext import pages
+
 @bot.slash_command()
 async def findpost(ctx, tags):
     posts = await api.search_posts(tags=[tags], limit=5, page=0)
@@ -38,7 +38,7 @@ async def findpost(ctx, tags):
 
     # Add posts to pages
     for i, post in enumerate(posts):
-        embed = discord.Embed(title=f"Page {i + 1}", description=f"If post cant be loaded\n {post.main.file}", color=discord.Color.random())  # Обновляем embed для каждого поста
+        embed = discord.Embed(title=f"Page {i + 1}", description=f"If post cant be loaded\n {post.main.file}", color=discord.Color.random())
         embed.add_field(name="tags: ",value=f"{' '.join(tuple(post.tags))}")
         embed.set_image(url=f"{post.main.file}")
         pages[i].embeds.append(embed)
