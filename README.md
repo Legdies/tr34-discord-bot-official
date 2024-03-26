@@ -21,4 +21,4 @@ example:\
 
 [x] List of posts\
 [x] Many tags in 1 request\
-[] rewrite all code 
+[ ] rewrite all code 
