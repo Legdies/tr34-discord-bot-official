@@ -20,4 +20,5 @@ example:\
 ## TODO
 
 [x] List of posts\
-[ ] Many tags in 1 request
+[x] Many tags in 1 request
+[] rewrite all code 
