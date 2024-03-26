@@ -13,12 +13,12 @@
 
 ## Usage
 
-In guild type /findpost and pass the tags that you like with amount of pages (__some pages will be empty if it no content here__).
+In guild type /findpost and pass the tags that you like with amount of pages (__some pages will be empty if it video or not content here__).
 example:\
  ```/findpost furry 45```
 
 ## TODO
 
 [x] List of posts\
-[x] Many tags in 1 request
+[x] Many tags in 1 request\
 [] rewrite all code 
