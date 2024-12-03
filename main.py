@@ -1,18 +1,6 @@
-import asyncio
 import json
-import logging
-#import config
-#import discord
-from discord.ext import commands
-
-from discord.commands import slash_command
 from discord.ext.pages import Paginator, Page
-import lib.R34newSDK as R34newSDK
-from lib.R34newSDK.models import FilePath, Post
 import discord
-import logging
-import datetime
-from discord.ui import Button
 
 bot = discord.Bot()
 import config
