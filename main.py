@@ -1,20 +1,23 @@
 import asyncio
+import json
 import logging
-import config
-import discord
+#import config
+#import discord
 from discord.ext import commands
 
 from discord.commands import slash_command
 from discord.ext.pages import Paginator, Page
-from tr34_sdk import TR34Api
+import lib.R34newSDK as R34newSDK
+from lib.R34newSDK.models import FilePath, Post
 import discord
 import logging
 import datetime
 from discord.ui import Button
-api = TR34Api()
+
 bot = discord.Bot()
-
-
+import config
+from lib.R34newSDK import ApiClient
+api = ApiClient()
 
 @bot.event
 async def on_ready():
@@ -23,11 +26,20 @@ async def on_ready():
 
 @bot.slash_command()
 async def findpost(ctx, tags):
-    posts = await api.search_posts(tags=[tags], limit=5, page=0)
+    posts = await api.ListPosts(tags=[tags], limit=5, page=0)
 
-    if not posts:
-        await ctx.respond("Постов с такими тегами не найдено.", ephemeral=True)
+    try:
+        if not posts:
+            await ctx.respond("Постов с такими тегами не найдено.", ephemeral=True)
+            return
+    except Exception as e:
+        await ctx.respond("API не доступен", ephemeral=True)
         return
+
+
+
+
+
 
     pages = []
 
@@ -37,22 +49,29 @@ async def findpost(ctx, tags):
         pages.append(page)
 
     # Add posts to pages
-    for i, post in enumerate(posts):
-        embed = discord.Embed(title=f"Page {i + 1}", description=f"If post cant be loaded\n {post.main.file}", color=discord.Color.random())
-        embed.add_field(name="tags: ",value=f"{' '.join(tuple(post.tags))}")
-        embed.set_image(url=f"{post.main.file}")
-        pages[i].embeds.append(embed)
+    try:
+        for i, post in enumerate(posts['posts']):
+            post=json.loads(post)
+            embed = discord.Embed(title=f"Page {i + 1}",
+                                  description=f"If post cant be loaded\n {post['url']}",
+                                  color=discord.Color.random())
+            postTags = post['tags']
+            limit = postTags[:5]
+            embed.add_field(name="tags: ", value=f"{' '.join(tuple(limit))}", inline=True)
+            embed.add_field(name="\nRating: ", value=f"{post['rating']}", inline=True)
+            embed.set_image(url=f"{post['file']['preview_url']}")
+            pages[i].embeds.append(embed)
 
-    # Handle empty pages
-    if len(posts) < 5:
-        for i in range(len(posts), 5):
-            pages[i].embeds.append(discord.Embed(title=f"Page {i + 1}", description="No posts found."))
-
-    paginator = Paginator(pages=pages)
-    await paginator.respond(ctx.interaction)
+        paginator = Paginator(pages=pages)
+        await paginator.respond(ctx.interaction)
+    except Exception as e:
+        print(post)
+        print(e)
 
 
 
+if __name__ == "__main__":
+    bot.run(config.TOKEN)
 
-bot.run(config.TOKEN)
+
 

@@ -16,6 +16,11 @@ Future changes:
     
 
 '''
-from . import ListPosts
-__all__ : tuple[str, ...] = ("ListPosts",
+APIurl = 'http://new-api.rule34.gg/'
+from . import *
+from .ListPosts import ApiClient
+__all__ : tuple[str, ...] = ("ApiClient",
+                             "models"
                               )
+
+
