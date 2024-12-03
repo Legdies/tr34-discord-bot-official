@@ -1,15 +1,14 @@
-## TR34-DISCORD-BOT-OFFICIAL
+## TR34-DISCORD-BOT-OFFICIAL or rule34.gg bot
 
 ### This bot can be used for spreading your ideas about internet art.
-### Uses only TR34Api and py-cord.
+### Uses only TR34Api [Now outdated and replaced by my own] and py-cord.
 
 ## Set-up
-1. Install py-cord and TR34_SDK\
-```pip install py-cord tr34-sdk```
+1. Clone repo
+2. execute ```pip install -r requirements.txt```
+3. create config.py in a root directory with the content ```TOKEN="Token"```
+4. Run main.py
 
-2. Create config.py in project folder with key\
- TOKEN = "your token"
-3. Copy the main.py and run it.
 
 ## Usage
 
