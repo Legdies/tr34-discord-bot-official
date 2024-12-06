@@ -16,10 +16,10 @@ Future changes:
     
 
 '''
-APIurl = 'http://new-api.rule34.gg/'
+APIurl = 'https://new-api.rule34.gg/'
 from . import *
-from .ListPosts import ApiClient
-__all__ : tuple[str, ...] = ("ApiClient",
+from .FindPosts import ApiClient
+__all__ : tuple[str, ...] = ("ApiClient"
                              "models"
                               )
 

@@ -14,7 +14,7 @@ async def on_ready():
 
 @bot.slash_command()
 async def findpost(ctx, tags):
-    posts = await api.ListPosts(tags=[tags], limit=5, page=0)
+    posts = await api.FindPosts(tags=[tags], limit=5, page=0)
 
     try:
         if not posts:
@@ -45,7 +45,7 @@ async def findpost(ctx, tags):
                                   color=discord.Color.random())
             postTags = post['tags']
             limit = postTags[:5]
-            embed.add_field(name="tags: ", value=f"{' '.join(tuple(limit))}", inline=True)
+            embed.add_field(name="tags: ", value=f"```{' '.join(tuple(limit))}```", inline=True)
             embed.add_field(name="\nRating: ", value=f"{post['rating']}", inline=True)
             embed.set_image(url=f"{post['file']['preview_url']}")
             pages[i].embeds.append(embed)
