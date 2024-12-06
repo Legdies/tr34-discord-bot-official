@@ -21,3 +21,5 @@ example:\
 [x] List of posts\
 [x] Many tags in 1 request\
 [ ] rewrite all code 
+[ ] Installer like script to linux.
+
